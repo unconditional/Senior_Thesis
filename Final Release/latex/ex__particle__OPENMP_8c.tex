@@ -1,0 +1,272 @@
+\hypertarget{ex__particle__OPENMP_8c}{
+\section{ex\_\-particle\_\-OPENMP.c File Reference}
+\label{ex__particle__OPENMP_8c}\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+}
+
+
+Particle filter implementation in C/OpenMP.  
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+{\ttfamily \#include $<$omp.h$>$}\par
+{\ttfamily \#include $<$limits.h$>$}\par
+{\ttfamily \#include \char`\"{}mex.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}mat.h\char`\"{}}\par
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{ex__particle__OPENMP_8c_a598a3330b3c21701223ee0ca14316eca}{
+\#define {\bfseries PI}~acos(-\/1)}
+\label{ex__particle__OPENMP_8c_a598a3330b3c21701223ee0ca14316eca}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{ex__particle__OPENMP_8c_a8b9e6dd1f65d08f3f2537574b12f7fe5}{roundDouble} (double value)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a0ee0664eb7123e026513e7cf19ba3434}{setIf} (int testValue, int newValue, int $\ast$array3D, int $\ast$dimX, int $\ast$dimY, int $\ast$dimZ)
+\item 
+double \hyperlink{ex__particle__OPENMP_8c_ab1c72924f3fb8ede452cb4f287907741}{randu} (int $\ast$seed, int index)
+\item 
+double \hyperlink{ex__particle__OPENMP_8c_a4b441b42d0a8b6dc3a2b30db3be1d6b5}{randn} (int $\ast$seed, int index)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_ac771bf31b048f6a46077a3da36068a02}{addNoise} (int $\ast$array3D, int $\ast$dimX, int $\ast$dimY, int $\ast$dimZ, int $\ast$seed)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a2f03f766b1c044ea6bab007e1975a23f}{strelDisk} (int $\ast$disk, int radius)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_af2a0216d5b584632a6508d5ad918734e}{dilate\_\-matrix} (int $\ast$matrix, int posX, int posY, int posZ, int dimX, int dimY, int dimZ, int error)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a707e839d9152f9bf820dee64c6627f5b}{imdilate\_\-disk} (int $\ast$matrix, int dimX, int dimY, int dimZ, int error, int $\ast$newMatrix)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a2a8357e06057d48a030afcb481081349}{getneighbors} (int $\ast$se, int numOnes, double $\ast$neighbors, int radius)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a2925e128f88b60e0904210704e5ff7f5}{videoSequence} (int $\ast$I, int IszX, int IszY, int Nfr, int $\ast$seed)
+\item 
+double \hyperlink{ex__particle__OPENMP_8c_a875b89dec232da58dee8863b7d673808}{calcLikelihoodSum} (int $\ast$I, int $\ast$ind, int numOnes)
+\item 
+int \hyperlink{ex__particle__OPENMP_8c_a71e946a9752dba5f8f3def41e58a8469}{findIndex} (double $\ast$CDF, int lengthCDF, double value)
+\item 
+int \hyperlink{ex__particle__OPENMP_8c_a0952c4d9efa944180ca6deb470239fba}{findIndexBin} (double $\ast$CDF, int beginIndex, int endIndex, double value)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a31746ff3055946c596437a94b1e7fcd9}{particleFilter} (int $\ast$I, int IszX, int IszY, int Nfr, int $\ast$seed, int Nparticles, double $\ast$x\_\-loc, double $\ast$y\_\-loc, double xe, double ye)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a81e883a19beb30fd4ebe47acb98dbd0d}{particleFilter1F} (int $\ast$I, int IszX, int IszY, int $\ast$seed, int Nparticles, double $\ast$x\_\-loc, double $\ast$y\_\-loc, double prevX, double prevY)
+\item 
+void \hyperlink{ex__particle__OPENMP_8c_a6a215cbfde54f82a3ce599228fc3fce5}{mexFunction} (int nlhs, mxArray $\ast$plhs\mbox{[}$\,$\mbox{]}, int nrhs, const mxArray $\ast$prhs\mbox{[}$\,$\mbox{]})
+\item 
+int \hyperlink{ex__particle__OPENMP_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{ex__particle__OPENMP_8c_a4bc2e1f1527e2a5d555689a4288c341f}{
+long {\bfseries M} = INT\_\-MAX}
+\label{ex__particle__OPENMP_8c_a4bc2e1f1527e2a5d555689a4288c341f}
+
+\item 
+\hypertarget{ex__particle__OPENMP_8c_a56a52f73797a8d06045cf5bc1ab831bf}{
+int {\bfseries A} = 1103515245}
+\label{ex__particle__OPENMP_8c_a56a52f73797a8d06045cf5bc1ab831bf}
+
+\item 
+\hypertarget{ex__particle__OPENMP_8c_a5464533d23b59ba11030432e73528730}{
+int {\bfseries C} = 12345}
+\label{ex__particle__OPENMP_8c_a5464533d23b59ba11030432e73528730}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Particle filter implementation in C/OpenMP. \begin{DoxyAuthor}{Author}
+Michael Trotter \& Matt Goodrum 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{ex__particle__OPENMP_8c_ac771bf31b048f6a46077a3da36068a02}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!addNoise@{addNoise}}
+\index{addNoise@{addNoise}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{addNoise}]{\setlength{\rightskip}{0pt plus 5cm}void addNoise (int $\ast$ {\em array3D}, \/  int $\ast$ {\em dimX}, \/  int $\ast$ {\em dimY}, \/  int $\ast$ {\em dimZ}, \/  int $\ast$ {\em seed})}}
+\label{ex__particle__OPENMP_8c_ac771bf31b048f6a46077a3da36068a02}
+Sets values of 3D matrix using randomly generated numbers from a normal distribution 
+\begin{DoxyParams}{Parameters}
+\item[{\em array3D}]The video to be modified \item[{\em dimX}]The x dimension of the frame \item[{\em dimY}]The y dimension of the frame \item[{\em dimZ}]The number of frames \item[{\em seed}]The seed array \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a875b89dec232da58dee8863b7d673808}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!calcLikelihoodSum@{calcLikelihoodSum}}
+\index{calcLikelihoodSum@{calcLikelihoodSum}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{calcLikelihoodSum}]{\setlength{\rightskip}{0pt plus 5cm}double calcLikelihoodSum (int $\ast$ {\em I}, \/  int $\ast$ {\em ind}, \/  int {\em numOnes})}}
+\label{ex__particle__OPENMP_8c_a875b89dec232da58dee8863b7d673808}
+Determines the likelihood sum based on the formula: SUM( (IK\mbox{[}IND\mbox{]} -\/ 100)$^\wedge$2 -\/ (IK\mbox{[}IND\mbox{]} -\/ 228)$^\wedge$2)/ 100 
+\begin{DoxyParams}{Parameters}
+\item[{\em I}]The 3D matrix \item[{\em ind}]The current ind array \item[{\em numOnes}]The length of ind array \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A double representing the sum 
+\end{DoxyReturn}
+\hypertarget{ex__particle__OPENMP_8c_af2a0216d5b584632a6508d5ad918734e}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!dilate\_\-matrix@{dilate\_\-matrix}}
+\index{dilate\_\-matrix@{dilate\_\-matrix}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{dilate\_\-matrix}]{\setlength{\rightskip}{0pt plus 5cm}void dilate\_\-matrix (int $\ast$ {\em matrix}, \/  int {\em posX}, \/  int {\em posY}, \/  int {\em posZ}, \/  int {\em dimX}, \/  int {\em dimY}, \/  int {\em dimZ}, \/  int {\em error})}}
+\label{ex__particle__OPENMP_8c_af2a0216d5b584632a6508d5ad918734e}
+Dilates the provided video 
+\begin{DoxyParams}{Parameters}
+\item[{\em matrix}]The video to be dilated \item[{\em posX}]The x location of the pixel to be dilated \item[{\em posY}]The y location of the pixel to be dilated \item[{\em poxZ}]The z location of the pixel to be dilated \item[{\em dimX}]The x dimension of the frame \item[{\em dimY}]The y dimension of the frame \item[{\em dimZ}]The number of frames \item[{\em error}]The error radius \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a71e946a9752dba5f8f3def41e58a8469}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!findIndex@{findIndex}}
+\index{findIndex@{findIndex}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{findIndex}]{\setlength{\rightskip}{0pt plus 5cm}int findIndex (double $\ast$ {\em CDF}, \/  int {\em lengthCDF}, \/  double {\em value})}}
+\label{ex__particle__OPENMP_8c_a71e946a9752dba5f8f3def41e58a8469}
+Finds the first element in the CDF that is greater than or equal to the provided value and returns that index \begin{DoxyNote}{Note}
+This function uses sequential search 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em CDF}]The CDF \item[{\em lengthCDF}]The length of CDF \item[{\em value}]The value to be found \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The index of value in the CDF; if value is never found, returns the last index 
+\end{DoxyReturn}
+\hypertarget{ex__particle__OPENMP_8c_a0952c4d9efa944180ca6deb470239fba}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!findIndexBin@{findIndexBin}}
+\index{findIndexBin@{findIndexBin}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{findIndexBin}]{\setlength{\rightskip}{0pt plus 5cm}int findIndexBin (double $\ast$ {\em CDF}, \/  int {\em beginIndex}, \/  int {\em endIndex}, \/  double {\em value})}}
+\label{ex__particle__OPENMP_8c_a0952c4d9efa944180ca6deb470239fba}
+Finds the first element in the CDF that is greater than or equal to the provided value and returns that index \begin{DoxyNote}{Note}
+This function uses binary search before switching to sequential search 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em CDF}]The CDF \item[{\em beginIndex}]The index to start searching from \item[{\em endIndex}]The index to stop searching \item[{\em value}]The value to find \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The index of value in the CDF; if value is never found, returns the last index 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Use at your own risk; not fully tested 
+\end{DoxyWarning}
+\hypertarget{ex__particle__OPENMP_8c_a2a8357e06057d48a030afcb481081349}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!getneighbors@{getneighbors}}
+\index{getneighbors@{getneighbors}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{getneighbors}]{\setlength{\rightskip}{0pt plus 5cm}void getneighbors (int $\ast$ {\em se}, \/  int {\em numOnes}, \/  double $\ast$ {\em neighbors}, \/  int {\em radius})}}
+\label{ex__particle__OPENMP_8c_a2a8357e06057d48a030afcb481081349}
+Fills a 2D array describing the offsets of the disk object 
+\begin{DoxyParams}{Parameters}
+\item[{\em se}]The disk object \item[{\em numOnes}]The number of ones in the disk \item[{\em neighbors}]The array that will contain the offsets \item[{\em radius}]The radius used for dilation \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a707e839d9152f9bf820dee64c6627f5b}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!imdilate\_\-disk@{imdilate\_\-disk}}
+\index{imdilate\_\-disk@{imdilate\_\-disk}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{imdilate\_\-disk}]{\setlength{\rightskip}{0pt plus 5cm}void imdilate\_\-disk (int $\ast$ {\em matrix}, \/  int {\em dimX}, \/  int {\em dimY}, \/  int {\em dimZ}, \/  int {\em error}, \/  int $\ast$ {\em newMatrix})}}
+\label{ex__particle__OPENMP_8c_a707e839d9152f9bf820dee64c6627f5b}
+Dilates the target matrix using the radius as a guide 
+\begin{DoxyParams}{Parameters}
+\item[{\em matrix}]The reference matrix \item[{\em dimX}]The x dimension of the video \item[{\em dimY}]The y dimension of the video \item[{\em dimZ}]The z dimension of the video \item[{\em error}]The error radius to be dilated \item[{\em newMatrix}]The target matrix \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!main@{main}}
+\index{main@{main}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main ()}}
+\label{ex__particle__OPENMP_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+Unused \hypertarget{ex__particle__OPENMP_8c_a6a215cbfde54f82a3ce599228fc3fce5}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!mexFunction@{mexFunction}}
+\index{mexFunction@{mexFunction}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{mexFunction}]{\setlength{\rightskip}{0pt plus 5cm}void mexFunction (int {\em nlhs}, \/  mxArray $\ast$ {\em plhs}\mbox{[}$\,$\mbox{]}, \/  int {\em nrhs}, \/  const mxArray $\ast$ {\em prhs}\mbox{[}$\,$\mbox{]})}}
+\label{ex__particle__OPENMP_8c_a6a215cbfde54f82a3ce599228fc3fce5}
+Function that allows the 2 particle filter implementations to be run
+
+The number of arguments provided to this function determines which function will be called. 7 args will call the video processing version. 6 (leaving out the number of frames) will call the image processing version. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nlhs}](Number on the Left Hand Side) The number of items to return (2 will be in this case; the x and y arrays) \item[{\em plhs}](Parameters on the Left Hand Side) A pointer to the arrays containing the x and y arrays \item[{\em nrhs}](Number on the Right Hand Side) The number of arguments to take in (7 are needed for video processing (The image as an unsigned char, the x dimension, the y dimension, the number of frames, the number of particles, the x starting position, the y starting position) 6 are needed for the image processing (same as before but leave out the number of frames) \item[{\em prhs}](Parameters on the Right Hand Side) A pointer to the arrays containing the parameters \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a31746ff3055946c596437a94b1e7fcd9}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!particleFilter@{particleFilter}}
+\index{particleFilter@{particleFilter}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{particleFilter}]{\setlength{\rightskip}{0pt plus 5cm}void particleFilter (int $\ast$ {\em I}, \/  int {\em IszX}, \/  int {\em IszY}, \/  int {\em Nfr}, \/  int $\ast$ {\em seed}, \/  int {\em Nparticles}, \/  double $\ast$ {\em x\_\-loc}, \/  double $\ast$ {\em y\_\-loc}, \/  double {\em xe}, \/  double {\em ye})}}
+\label{ex__particle__OPENMP_8c_a31746ff3055946c596437a94b1e7fcd9}
+The implementation of the particle filter using OpenMP for many frames \begin{DoxySeeAlso}{See also}
+\href{http://openmp.org/wp/}{\tt http://openmp.org/wp/} 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+This function is designed to work with a video of several frames. In addition, it references a provided MATLAB function which takes the video, the objxy matrix and the x and y arrays as arguments and returns the likelihoods 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em I}]The video to be run \item[{\em IszX}]The x dimension of the video \item[{\em IszY}]The y dimension of the video \item[{\em Nfr}]The number of frames \item[{\em seed}]The seed array used for random number generation \item[{\em Nparticles}]The number of particles to be used \item[{\em x\_\-loc}]The array that will store the x locations of the desired object \item[{\em y\_\-loc}]The array that will store the y locations of the desired object \item[{\em xe}]The starting x position of the object \item[{\em ye}]The starting y position of the object \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a81e883a19beb30fd4ebe47acb98dbd0d}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!particleFilter1F@{particleFilter1F}}
+\index{particleFilter1F@{particleFilter1F}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{particleFilter1F}]{\setlength{\rightskip}{0pt plus 5cm}void particleFilter1F (int $\ast$ {\em I}, \/  int {\em IszX}, \/  int {\em IszY}, \/  int $\ast$ {\em seed}, \/  int {\em Nparticles}, \/  double $\ast$ {\em x\_\-loc}, \/  double $\ast$ {\em y\_\-loc}, \/  double {\em prevX}, \/  double {\em prevY})}}
+\label{ex__particle__OPENMP_8c_a81e883a19beb30fd4ebe47acb98dbd0d}
+The implementation of the particle filter using OpenMP for a single image \begin{DoxySeeAlso}{See also}
+\href{http://openmp.org/wp/}{\tt http://openmp.org/wp/} 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+This function is designed to work with a single image. In addition, it references a provided MATLAB function which takes the video, the objxy matrix and the x and y arrays as arguments and returns the likelihoods 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Use the other particle filter function for videos; the accuracy of this function decreases significantly as it is called repeatedly while processing video 
+\end{DoxyWarning}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em I}]The image to be run \item[{\em IszX}]The x dimension of the image \item[{\em IszY}]The y dimension of the image \item[{\em seed}]The seed array used for random number generation \item[{\em Nparticles}]The number of particles to be used \item[{\em x\_\-loc}]The array that will store the x locations of the desired object \item[{\em y\_\-loc}]The array that will store the y locations of the desired object \item[{\em prevX}]The starting x position of the object \item[{\em prevY}]The starting y position of the object \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a4b441b42d0a8b6dc3a2b30db3be1d6b5}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!randn@{randn}}
+\index{randn@{randn}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{randn}]{\setlength{\rightskip}{0pt plus 5cm}double randn (int $\ast$ {\em seed}, \/  int {\em index})}}
+\label{ex__particle__OPENMP_8c_a4b441b42d0a8b6dc3a2b30db3be1d6b5}
+Generates a normally distributed random number using the Box-\/Muller transformation \begin{DoxyNote}{Note}
+This function is thread-\/safe 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em seed}]The seed array \item[{\em index}]The specific index of the seed to be advanced \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a double representing random number generated using the Box-\/Muller algorithm 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\href{http://en.wikipedia.org/wiki/Normal_distribution,}{\tt http://en.wikipedia.org/wiki/Normal\_\-distribution,} section computing value for normal random distribution 
+\end{DoxySeeAlso}
+\hypertarget{ex__particle__OPENMP_8c_ab1c72924f3fb8ede452cb4f287907741}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!randu@{randu}}
+\index{randu@{randu}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{randu}]{\setlength{\rightskip}{0pt plus 5cm}double randu (int $\ast$ {\em seed}, \/  int {\em index})}}
+\label{ex__particle__OPENMP_8c_ab1c72924f3fb8ede452cb4f287907741}
+Generates a uniformly distributed random number using the provided seed and GCC's settings for the Linear Congruential Generator (LCG) \begin{DoxySeeAlso}{See also}
+\href{http://en.wikipedia.org/wiki/Linear_congruential_generator}{\tt http://en.wikipedia.org/wiki/Linear\_\-congruential\_\-generator} 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+This function is thread-\/safe 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em seed}]The seed array \item[{\em index}]The specific index of the seed to be advanced \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a uniformly distributed number \mbox{[}0, 1) 
+\end{DoxyReturn}
+\hypertarget{ex__particle__OPENMP_8c_a8b9e6dd1f65d08f3f2537574b12f7fe5}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!roundDouble@{roundDouble}}
+\index{roundDouble@{roundDouble}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{roundDouble}]{\setlength{\rightskip}{0pt plus 5cm}double roundDouble (double {\em value})}}
+\label{ex__particle__OPENMP_8c_a8b9e6dd1f65d08f3f2537574b12f7fe5}
+Takes in a double and returns an integer that approximates to that double \begin{DoxyReturn}{Returns}
+if the mantissa $<$ .5 =$>$ return value $<$ input value; else return value $>$ input value 
+\end{DoxyReturn}
+\hypertarget{ex__particle__OPENMP_8c_a0ee0664eb7123e026513e7cf19ba3434}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!setIf@{setIf}}
+\index{setIf@{setIf}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{setIf}]{\setlength{\rightskip}{0pt plus 5cm}void setIf (int {\em testValue}, \/  int {\em newValue}, \/  int $\ast$ {\em array3D}, \/  int $\ast$ {\em dimX}, \/  int $\ast$ {\em dimY}, \/  int $\ast$ {\em dimZ})}}
+\label{ex__particle__OPENMP_8c_a0ee0664eb7123e026513e7cf19ba3434}
+Set values of the 3D array to a newValue if that value is equal to the testValue 
+\begin{DoxyParams}{Parameters}
+\item[{\em testValue}]The value to be replaced \item[{\em newValue}]The value to replace testValue with \item[{\em array3D}]The image vector \item[{\em dimX}]The x dimension of the frame \item[{\em dimY}]The y dimension of the frame \item[{\em dimZ}]The number of frames \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a2f03f766b1c044ea6bab007e1975a23f}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!strelDisk@{strelDisk}}
+\index{strelDisk@{strelDisk}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{strelDisk}]{\setlength{\rightskip}{0pt plus 5cm}void strelDisk (int $\ast$ {\em disk}, \/  int {\em radius})}}
+\label{ex__particle__OPENMP_8c_a2f03f766b1c044ea6bab007e1975a23f}
+Fills a radius x radius matrix representing the disk 
+\begin{DoxyParams}{Parameters}
+\item[{\em disk}]The pointer to the disk to be made \item[{\em radius}]The radius of the disk to be made \end{DoxyParams}
+\hypertarget{ex__particle__OPENMP_8c_a2925e128f88b60e0904210704e5ff7f5}{
+\index{ex\_\-particle\_\-OPENMP.c@{ex\_\-particle\_\-OPENMP.c}!videoSequence@{videoSequence}}
+\index{videoSequence@{videoSequence}!ex_particle_OPENMP.c@{ex\_\-particle\_\-OPENMP.c}}
+\subsubsection[{videoSequence}]{\setlength{\rightskip}{0pt plus 5cm}void videoSequence (int $\ast$ {\em I}, \/  int {\em IszX}, \/  int {\em IszY}, \/  int {\em Nfr}, \/  int $\ast$ {\em seed})}}
+\label{ex__particle__OPENMP_8c_a2925e128f88b60e0904210704e5ff7f5}
+The synthetic video sequence we will work with here is composed of a single moving object, circular in shape (fixed radius) The motion here is a linear motion the foreground intensity and the backgrounf intensity is known the image is corrupted with zero mean Gaussian noise 
+\begin{DoxyParams}{Parameters}
+\item[{\em I}]The video itself \item[{\em IszX}]The x dimension of the video \item[{\em IszY}]The y dimension of the video \item[{\em Nfr}]The number of frames of the video \item[{\em seed}]The seed array used for number generation \end{DoxyParams}
